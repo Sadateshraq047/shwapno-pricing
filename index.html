@@ -8,45 +8,51 @@
 <style>
 :root{
   color-scheme:light;
-  --bg:#eef3fb; --surface:#ffffff; --surface-2:#e8effb; --ink:#0f1b33; --ink-soft:#4a5878; --ink-mute:#7585a4; --line:#d6e1f3;
-  --brand:#1f4fd8; --brand-deep:#163aa6; --navy:#3b52a3;
+  --bg:#e6eefb; --surface:#ffffff; --surface-2:#e1eafa; --ink:#14264a; --ink-soft:#44587f; --ink-mute:#6a7ca0; --line:#cddaf1;
+  --brand:#2a5bd7; --brand-deep:#1d3f9c; --navy:#2f4a9a;
   --over:#e8643a; --over-ink:#a2401a; --over-soft:#fde9e1;
   --under:#1a9aa6; --under-ink:#0d6670; --under-soft:#dff3f4;
   --bar:#2f6fed; --good:#1e8449; --warn:#f5b800; --red:#e53935;
-  --shadow:0 1px 2px rgba(15,27,51,.05),0 10px 26px -14px rgba(31,79,216,.28); --r:8px;
+  --shadow:0 1px 2px rgba(20,38,74,.05),0 12px 28px -14px rgba(31,79,216,.35); --r:14px;
   --font:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:ui-monospace,Consolas,monospace;
 }
 :root[data-theme=dark]{
-  color-scheme:dark;--bg:#0a1122;--surface:#111b33;--surface-2:#19264a;--ink:#eaf0ff;--ink-soft:#b7c3e0;--ink-mute:#8a99bd;--line:#26365f;
-  --brand:#5b86ff;--brand-deep:#3f6ae6;--navy:#1d2c63;--over:#f0794f;--over-ink:#ffb190;--over-soft:#3a2018;--under:#35b3bf;--under-ink:#8fdde4;--under-soft:#10353a;--bar:#6ea0ff;--shadow:none;
+  color-scheme:dark;--bg:#0b1429;--surface:#111d3a;--surface-2:#182750;--ink:#e8efff;--ink-soft:#b3c1e2;--ink-mute:#8c9cc4;--line:#243766;
+  --brand:#5b86ff;--brand-deep:#3f6ae6;--navy:#1b2c63;--over:#f0794f;--over-ink:#ffb190;--over-soft:#3a2018;--under:#35b3bf;--under-ink:#8fdde4;--under-soft:#10353a;--bar:#6ea0ff;--shadow:none;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.45 var(--font);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .wrap{max-width:1600px;margin:0 auto;padding:0 18px}
-header{background:var(--navy);color:#fff}
-.hrow{display:flex;align-items:center;gap:18px;padding:10px 0;flex-wrap:wrap}
+header{background:linear-gradient(100deg,#0b2a86 0%,#1f4fd0 60%,#2f6cf0 100%);color:#fff}
+:root[data-theme=dark] header{background:linear-gradient(100deg,#08122f 0%,#12307e 70%,#1d4cc4 100%)}
+.hrow{display:flex;align-items:center;gap:18px;padding:10px 18px;flex-wrap:wrap}
 .logo{height:54px;width:54px;border-radius:4px;background:#fff}
-h1{margin:0;font-size:26px;font-weight:700;letter-spacing:.01em}
+h1{margin:0;font-size:28px;font-weight:700;letter-spacing:.005em}
 .sp{flex:1}
-.tab{border:0;border-radius:6px;padding:10px 22px;font-weight:700;cursor:pointer;background:#fff;color:#14224d}
-.tab.on{background:#f5b800;color:#14224d}
-.ibtn{border:1px solid rgba(255,255,255,.4);background:transparent;color:#fff;border-radius:6px;padding:7px 12px;cursor:pointer}
+.tab{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:8px 20px;font-weight:600;cursor:pointer;background:rgba(255,255,255,.12);color:#fff}
+.tab:hover{background:rgba(255,255,255,.22)}
+.tab.on{background:#fff;color:#1b3a9e;border-color:#fff}
+.ibtn{border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer}
 .meta{font-size:12px;opacity:.85}
-.filters{background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:12px 0}
+.filters{background:#f3f7fe;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.fgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px 10px;padding:10px 0}
+@media(max-width:1000px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.f.full{grid-column:1/-1}
 .f label{display:block;font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
-.f input,.f select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2)}
+.f input,.f select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .chips{display:flex;flex-wrap:wrap;gap:4px}
-.chip{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:2px 9px;font-size:12px;cursor:pointer}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:12px;cursor:pointer}
 .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
-.f.wide{grid-column:span 2}
+.ms{position:relative}.msb{width:100%;text-align:left;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp{position:absolute;z-index:30;display:none;max-height:280px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;min-width:100%;width:max-content;max-width:340px;box-shadow:0 8px 24px rgba(20,38,74,.18);padding:4px}
+.ms.open .mp{display:block}.f .mi,.mi{display:flex;gap:6px;align-items:center;padding:3px 6px;border-radius:4px;cursor:pointer;margin:0;text-transform:none!important;letter-spacing:0!important;font-size:12.5px!important;color:var(--ink)!important}.mi:hover{background:var(--surface-2)}.mi input{width:auto}
 main{padding:14px 0 40px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:12px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;box-shadow:var(--shadow)}
 .card .k{font-size:11px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.04em}
-.card .v{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.card .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
 .card .s{font-size:12px;color:var(--ink-soft)}
 .over .v{color:var(--over-ink)} .under .v{color:var(--under-ink)}
 .note{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;margin-bottom:12px;color:var(--ink-soft)}
@@ -54,19 +60,22 @@ main{padding:14px 0 40px}
 .sel{display:none;align-items:center;gap:8px;background:var(--over-soft);border:1px solid var(--over);border-radius:var(--r);padding:6px 12px;margin-bottom:12px}
 .sel.show{display:flex}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
-.ph{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
-.ph h2{margin:0;font-size:15px}
+.ph{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.ph h2{margin:0;font-size:16px;font-weight:700;color:var(--ink)}
 .ph .c{font-size:12px;color:var(--ink-mute)}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 14px;cursor:pointer;font-size:12px;font-weight:600;color:var(--brand-deep)}
+:root[data-theme=dark] .btn{color:var(--ink)}
 .btn:hover{border-color:var(--brand)}
 .row2{display:grid;grid-template-columns:1fr 1.35fr;gap:14px}
 .row3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
 @media(max-width:1100px){.row2,.row3{grid-template-columns:1fr}}
-.tw{overflow:auto;max-height:520px}
-table{border-collapse:collapse;width:100%;font-size:12.5px}
-th{position:sticky;top:0;background:var(--surface-2);text-align:left;padding:6px 8px;cursor:pointer;white-space:nowrap;border-bottom:1px solid var(--line);user-select:none}
+.tw{overflow:auto;max-height:330px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{position:sticky;top:0;background:#1b3a9e;color:#fff;text-align:left;padding:6px 7px;cursor:pointer;white-space:nowrap;border-bottom:1px solid var(--line);user-select:none;font-weight:600}
+:root[data-theme=dark] th{background:#1a2f72}
 th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
-td{padding:4px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:3px 7px;border-bottom:1px solid var(--line);white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+td.dv{font-weight:600;color:var(--ink)}
 tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 45%,transparent)}
 tbody tr.click{cursor:pointer} tbody tr.click:hover{background:var(--surface-2)}
 tbody tr.on{outline:2px solid var(--brand);outline-offset:-2px}
@@ -301,13 +310,14 @@ function hideTip(){tip.style.display='none'}
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 const SORT={};
+function devStyle(dp,over){if(dp==null)return'';const m=over?dp:-dp;if(!(m>=10))return'';const a=(0.10+Math.min(m,80)/80*0.34).toFixed(2);return'background:rgba('+(over?'240,121,79':'224,100,110')+','+a+')'}
 function devClass(dp,over){if(dp==null)return'';const v=over?dp:-dp;return v>80?'cell-red':v>50?'cell-pink':v>30?'cell-or':v>20?'cell-yel':v>10?'cell-ly':''}
 function renderTable(host,id,cols,rows,o){
   o=o||{};const st=SORT[id]||(SORT[id]=o.sort||{k:null,d:1});
   if(st.k){const c=cols.find(c=>c.k===st.k);if(c){const g=c.s||(r=>r[c.k]);rows=rows.slice().sort((a,b)=>{const x=g(a),y=g(b);if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return(x<y?-1:x>y?1:0)*st.d})}}
   const max=o.max||500,vis=rows.slice(0,max);
   let h='<div class="tw"><table><thead><tr>'+cols.map(c=>'<th class="'+(c.n?'n':'')+'" data-k="'+c.k+'">'+esc(c.h)+(st.k===c.k?(st.d>0?' ▲':' ▼'):'')+'</th>').join('')+'</tr></thead><tbody>';
-  vis.forEach((r,i)=>{h+='<tr class="'+(o.click?'click ':'')+(o.isSel&&o.isSel(r)?'on':'')+'" data-i="'+i+'">'+cols.map(c=>{const v=c.f?c.f(r):r[c.k];const cls=(c.n?'n ':'')+(c.cls?c.cls(r):'');return'<td class="'+cls+'">'+esc(v)+'</td>'}).join('')+'</tr>'});
+  vis.forEach((r,i)=>{h+='<tr class="'+(o.click?'click ':'')+(o.isSel&&o.isSel(r)?'on':'')+'" data-i="'+i+'">'+cols.map(c=>{const v=c.f?c.f(r):r[c.k];const cls=(c.n?'n ':'')+(c.st?'dv ':'')+(c.cls?c.cls(r):'');const sty=c.st?c.st(r):'';return'<td class="'+cls+'"'+(sty?' style="'+sty+'"':'')+' title="'+esc(v)+'">'+esc(v)+'</td>'}).join('')+'</tr>'});
   h+='</tbody></table></div>';
   if(!rows.length)h='<div class="empty">'+(o.empty||'No rows for the current filters.')+'</div>';
   host.innerHTML=h;
@@ -327,7 +337,7 @@ function download(name,host){
 function panel(id,title,extra){return'<div class="panel"><div class="ph"><h2>'+title+'</h2><span class="c"></span><span style="flex:1"></span>'+(extra||'')+'<button class="btn" data-csv="'+id+'">Download CSV</button></div><div id="'+id+'"></div></div>'}
 /* ---------- SVG charts ---------- */
 function svgCombo(host,days,opt){
-  const W=Math.max(900,host.clientWidth||900),H=300,m={l:58,r:56,t:16,b:56},w=W-m.l-m.r,h=H-m.t-m.b,n=days.length;
+  const W=Math.max(900,host.clientWidth||900),H=215,m={l:58,r:56,t:10,b:50},w=W-m.l-m.r,h=H-m.t-m.b,n=days.length;
   if(!n){host.innerHTML='<div class="empty">No days.</div>';return}
   const mq=Math.max(1,...days.map(d=>d.q)),pv=days.flatMap(d=>[d.u,d.a]).filter(x=>x!=null),mx=Math.max(1,...pv)*1.1,mn=Math.min(...pv,mx)*0.9;
   const bw=w/n,X=i=>m.l+bw*(i+.5),Yq=v=>m.t+h-v/mq*h*.55,Yp=v=>m.t+h-(v-mn)/(mx-mn||1)*h;
@@ -352,7 +362,7 @@ function svgHBars(host,items,color,title){
 }
 function svgVBars(host,items,color,pctLabel){
   if(!items.length){host.innerHTML='<div class="empty">No incidents.</div>';return}
-  const W=Math.max(520,host.clientWidth||520),H=300,m={l:36,r:40,t:20,b:70},w=W-m.l-m.r,h=H-m.t-m.b,n=items.length,bw=w/n,mx=Math.max(...items.map(i=>i.v))||1;
+  const W=Math.max(520,host.clientWidth||520),H=250,m={l:36,r:40,t:20,b:70},w=W-m.l-m.r,h=H-m.t-m.b,n=items.length,bw=w/n,mx=Math.max(...items.map(i=>i.v))||1;
   const mp=Math.max(1,...items.map(i=>i.p||0));
   let s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'">',pts='';
   items.forEach((it,i)=>{const bh=it.v/mx*h,x=m.l+i*bw;s+='<rect x="'+(x+bw*.15)+'" y="'+(m.t+h-bh)+'" width="'+bw*.7+'" height="'+bh+'" fill="'+color+'" data-t="'+esc(it.k)+': '+fmt(it.v)+(it.p!=null?' | '+fmt(it.p,1)+'%':'')+'"/>';
@@ -365,7 +375,7 @@ function svgVBars(host,items,color,pctLabel){
 function svgMap(host,counts,rates,mode){
   const mx=Math.max(1,...counts);
   const col=(p,c)=>{ if(p==null){return c>0?'#c0392b':'#ddd'} p*=100; return p>=15?'#7b0000':p>=10?'#c0392b':p>=5?'#e67e22':p>=2?'#f1c40f':'#dddddd'};
-  let s='<svg viewBox="0 0 500 650" width="100%" style="max-height:520px;background:var(--surface-2)"><path d="'+OUTLINE+'" fill="'+css('--surface')+'" stroke="'+css('--ink-mute')+'" stroke-width="1"/>';
+  let s='<svg viewBox="0 0 500 650" width="100%" style="max-height:340px;background:var(--surface-2)"><path d="'+OUTLINE+'" fill="'+css('--surface')+'" stroke="'+css('--ink-mute')+'" stroke-width="1"/>';
   M.districts.forEach((dn,i)=>{const xy=DIST_XY[dn];if(!xy)return;const c=counts[i]||0,p=rates?rates[i]:null,r=6+c/mx*22;
     s+='<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="'+r.toFixed(1)+'" fill="'+col(p,c)+'" fill-opacity=".85" stroke="#333" stroke-width=".5" data-t="'+esc(dn)+': '+fmt(c)+' incidents'+(p!=null?' ('+fmt(p*100,1)+'%)':'')+'"/>'});
   host.innerHTML=s+'</svg><div class="legend"><span>Colour = incident rate (0-2 / 2-5 / 5-10 / 10-15 / 15+ %)</span><span>Size = incident count</span></div>';bindTips(host);
@@ -374,27 +384,31 @@ function svgMap(host,counts,rates,mode){
 function curCols(){return{}}
 function setSel(a,o){F.art=a||'';F.outlet=o||'';syncInputs();render()}
 const isSel=r=>{const A=M.articles.c[r.a],O=M.outlets.c[r.o];return F.art.toLowerCase()===A.toLowerCase()&&F.outlet.toLowerCase()===O.toLowerCase()};
+function masterList(){return M.masters.map((m,i)=>m).sort((x,y)=>(x==='Null')-(y==='Null')||x.localeCompare(y))}
 function buildFilters(){
   const h=[];
-  h.push('<div class="f"><label>From</label><input type="date" id="fFrom" min="'+M.start+'" max="'+M.end+'"></div>');
-  h.push('<div class="f"><label>To</label><input type="date" id="fTo" min="'+M.start+'" max="'+M.end+'"></div>');
-  h.push('<div class="f wide"><label>Category Division</label><div class="chips" id="fMaster">'+M.masters.map(m=>'<span class="chip" data-m="'+esc(m)+'">'+esc(m)+'</span>').join('')+'</div></div>');
+  h.push('<div class="f"><label>Category Division</label><div class="ms" id="msWrap"><button type="button" class="msb" id="msBtn"></button><div class="mp" id="fMaster"><label class="mi"><input type="checkbox" id="mAll"> <b>All divisions</b></label>'+masterList().map(m=>'<label class="mi"><input type="checkbox" data-m="'+esc(m)+'"> '+esc(m)+'</label>').join('')+'</div></div></div>');
   h.push('<div class="f"><label>Category 3</label><select id="fCat3"></select></div>');
   h.push('<div class="f"><label>Article box (code or name)</label><input id="fArt" placeholder="e.g. 2401005, alu"></div>');
-  h.push('<div class="f"><label>Outlet box (code or name)</label><input id="fOut" placeholder="e.g. D058"></div>');
+  h.push('<div class="f"><label>From</label><input type="date" id="fFrom" min="'+M.start+'" max="'+M.end+'"></div>');
+  h.push('<div class="f"><label>To</label><input type="date" id="fTo" min="'+M.start+'" max="'+M.end+'"></div>');
+  h.push('<div class="f ob"><label>Purchase Type</label><select id="fPt"><option value="">All</option><option value="cash">Cash Purchase</option><option value="general">General Purchase</option></select></div>');
   h.push('<div class="f"><label>Outlets by Division</label><select id="fReg"><option value="">All</option>'+M.regions.map(r=>'<option>'+esc(r)+'</option>').join('')+'</select></div>');
   h.push('<div class="f"><label>Outlets by District</label><select id="fDis"><option value="">All</option>'+M.districts.map(r=>'<option>'+esc(r)+'</option>').join('')+'</select></div>');
-  h.push('<div class="f ob"><label>Purchase Type</label><select id="fPt"><option value="">All</option><option value="cash">Cash Purchase</option><option value="general">General Purchase</option></select></div>');
-  h.push('<div class="f wide ob"><label>Movement type</label><div class="chips" id="fMov">'+M.movs.filter(m=>m).slice(0,14).map(m=>'<span class="chip" data-v="'+esc(m)+'">'+esc(m)+'</span>').join('')+'</div></div>');
+  h.push('<div class="f"><label>Outlet box (code or name)</label><input id="fOut" placeholder="e.g. D058"></div>');
   h.push('<div class="f"><label>Quantity floor (n)</label><input type="number" id="fQf" min="0" step="1"></div>');
   h.push('<div class="f"><label>Deviation floor % (min '+Math.ceil(M.keep_dev)+')</label><input type="number" id="fDf" min="'+Math.ceil(M.keep_dev)+'" step="1"></div>');
   h.push('<div class="f"><label>&nbsp;</label><button class="btn" id="fReset" style="width:100%;padding:7px">Reset filters</button></div>');
+  h.push('<div class="f full ob"><label>Movement type</label><div class="chips" id="fMov">'+M.movs.filter(m=>m).slice(0,14).map(m=>'<span class="chip" data-v="'+esc(m)+'">'+esc(m)+'</span>').join('')+'</div></div>');
   $('#filters').innerHTML=h.join('');
   const on=(id,ev,fn)=>$(id).addEventListener(ev,fn);
   let tmr;const deb=fn=>()=>{clearTimeout(tmr);tmr=setTimeout(fn,250)};
   on('#fFrom','change',()=>{F.from=Math.max(0,Math.min(M.days-1,isoDay($('#fFrom').value)));if(F.to<F.from)F.to=F.from;syncInputs();render()});
   on('#fTo','change',()=>{F.to=Math.max(0,Math.min(M.days-1,isoDay($('#fTo').value)));if(F.from>F.to)F.from=F.to;syncInputs();render()});
-  $('#fMaster').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const m=c.dataset.m;F.master.has(m)?F.master.delete(m):F.master.add(m);F.cat3='';syncInputs();render()});
+  on('#msBtn','click',e=>{e.stopPropagation();$('#msWrap').classList.toggle('open')});
+  document.addEventListener('click',e=>{if(!$('#msWrap').contains(e.target))$('#msWrap').classList.remove('open')});
+  $('#fMaster').querySelectorAll('input[data-m]').forEach(c=>c.onchange=()=>{const m=c.dataset.m;c.checked?F.master.add(m):F.master.delete(m);F.cat3='';syncInputs();render()});
+  on('#mAll','change',()=>{F.master.clear();F.cat3='';syncInputs();render()});
   $('#fMov').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const m=c.dataset.v;F.mov.has(m)?F.mov.delete(m):F.mov.add(m);syncInputs();render()});
   on('#fCat3','change',()=>{F.cat3=$('#fCat3').value;render()});
   on('#fArt','input',deb(()=>{F.art=$('#fArt').value;render()}));on('#fOut','input',deb(()=>{F.outlet=$('#fOut').value;render()}));
@@ -402,16 +416,18 @@ function buildFilters(){
   on('#fPt','change',()=>{F.ptype=$('#fPt').value;render()});
   on('#fQf','input',deb(()=>{F.qf=Math.max(0,+$('#fQf').value||0);render()}));
   on('#fDf','input',deb(()=>{F.df=Math.max(Math.ceil(M.keep_dev),+$('#fDf').value||0);render()}));
-  on('#fReset','click',()=>{const k=F.df;F=Object.assign({},DEF,{master:new Set(),mov:new Set(),from:0,to:M.days-1,df:10});F.df=Math.max(10,Math.ceil(M.keep_dev));if(M.masters.includes('LOOSE COMMODITY'))F.master=new Set(['LOOSE COMMODITY']);syncInputs();render()});
+  on('#fReset','click',()=>{F=Object.assign({},DEF,{master:new Set(),mov:new Set(),from:0,to:M.days-1,df:10});F.df=Math.max(10,Math.ceil(M.keep_dev));if(M.masters.includes('LOOSE COMMODITY'))F.master=new Set(['LOOSE COMMODITY']);syncInputs();render()});
 }
 function syncInputs(){
   $('#fFrom').value=dayISO(F.from);$('#fTo').value=dayISO(F.to);
-  $('#fMaster').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',F.master.has(c.dataset.m)));
+  $('#fMaster').querySelectorAll('input[data-m]').forEach(c=>c.checked=F.master.has(c.dataset.m));
+  $('#mAll').checked=F.master.size===0;
+  const sel_=[...F.master];$('#msBtn').textContent=(sel_.length?(sel_.length>2?sel_.length+' selected':sel_.join(', ')):'All divisions')+'  ▾';
   $('#fMov').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',F.mov.has(c.dataset.v)));
   const c3=new Set();M.articles.c.forEach((_,i)=>{if(!F.master.size||F.master.has(M.masters[M.articles.ms[i]]))c3.add(M.cat3[M.articles.c3[i]])});
   const sel=$('#fCat3'),list=[...c3].filter(Boolean).sort();sel.innerHTML='<option value="">All</option>'+list.map(x=>'<option>'+esc(x)+'</option>').join('');sel.value=list.includes(F.cat3)?F.cat3:'';F.cat3=sel.value;
   $('#fArt').value=F.art;$('#fOut').value=F.outlet;$('#fReg').value=F.region;$('#fDis').value=F.district;$('#fPt').value=F.ptype;$('#fQf').value=F.qf;$('#fDf').value=F.df;
-  document.querySelectorAll('.ob').forEach(e=>e.style.display=PAGE==='OB'?'':'none');
+  document.querySelectorAll('.ob').forEach(e=>{const full=e.classList.contains('full');if(full)e.style.display=PAGE==='OB'?'':'none';else e.style.visibility=PAGE==='OB'?'visible':'hidden'});
 }
 function groupCount(rows,key){const m=new Map();rows.forEach(r=>m.set(key(r),(m.get(key(r))||0)+1));return m}
 function buildPages(){
@@ -453,9 +469,10 @@ function renderOB(){
   svgCombo($('#obChart'),obDaily(F,res),{l1:'Unit Receiving Cost',l2:'Avg Unit Receiving Cost',lq:'Receiving Qty'});
   const col=[
     {k:'on',h:'OutletName',f:r=>O.n[r.o]},{k:'oc',h:'Outlet Code',f:r=>O.c[r.o]},{k:'ac',h:'ArticleNo',f:r=>A.c[r.a]},{k:'an',h:'ArticleName',f:r=>A.n[r.a]},
+    {k:'dp',h:'Deviation % (Above n)',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>devStyle(r.dp,true)},
     {k:'c3',h:'Cat 3',f:r=>M.cat3[A.c3[r.a]]},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v},
     {k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.u,2),s:r=>r.u},{k:'avg',h:'Avg Unit Receiving Cost',n:1,f:r=>fmt(r.avg,2),s:r=>r.avg},
-    {k:'dp',h:'Deviation % (Above n)',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,cls:r=>devClass(r.dp,true)},{k:'loss',h:'Total Receiving Loss',n:1,f:r=>fmt(r.loss,2),s:r=>r.loss},
+    {k:'loss',h:'Total Receiving Loss',n:1,f:r=>fmt(r.loss,2),s:r=>r.loss},
     {k:'im',h:'Incident Sale Margin %',n:1,f:r=>pc(r.im),s:r=>r.im},{k:'am',h:'Avg Sale Margin %',n:1,f:r=>pc(r.am),s:r=>r.am}];
   renderTable($('#obT1'),'obT1',col,res.rows,{sort:{k:'dp',d:-1},click:r=>setSel(A.c[r.a],O.c[r.o]),isSel});
   // Table 2: daily rows of incident pairs
@@ -475,7 +492,7 @@ function renderOB(){
   renderTable($('#obT3'),'obT3',[{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},{k:'oc',h:'OutletCode',f:r=>O.c[r.o]},{k:'ac',h:'Article No',f:r=>A.c[r.a]},{k:'an',h:'ArticleName',f:r=>A.n[r.a]},
     {k:'c3',h:'Category',f:r=>M.cat3[A.c3[r.a]]},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v},
     {k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.u,2),s:r=>r.u},{k:'avg',h:'Avg Unit Receiving Cost DC',n:1,f:r=>fmt(r.avg,2),s:r=>r.avg},
-    {k:'dev',h:'Over Pricing Deviation DC',n:1,f:r=>fmt(r.dev,2),s:r=>r.dev},{k:'dp',h:'Deviation DC %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp}],dc,{sort:{k:'dp',d:-1}});
+    {k:'dev',h:'Over Pricing Deviation DC',n:1,f:r=>fmt(r.dev,2),s:r=>r.dev},{k:'dp',h:'Deviation DC %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>devStyle(r.dp,true)}],dc,{sort:{k:'dp',d:-1}});
   // charts: category / division / district
   const byC=groupCount(res.rows,r=>A.c3[r.a]),byR=groupCount(res.rows,r=>O.r[r.o]),byD=groupCount(res.rows,r=>O.d[r.o]);
   // incident % = incident pair-days / pair-days with qty>0  (tot arrays)
@@ -511,10 +528,11 @@ function renderUS(){
   $('#usNote').innerHTML='For selected date range of <b>'+days+'</b> days, for <b>'+res.rows.length+'</b> under-pricing incidents, the Sale Margin% was <b>'+(res.incMargin==null?'n/a':pc(res.incMargin*100,1))+'</b> vs Average Sale Margin% <b>'+(res.avgMargin==null?'n/a':pc(res.avgMargin*100,1))+'</b>.';
   selBox('#usSel',res);
   svgCombo($('#usChart'),usDaily(F,res),{l1:'Incident average price',l2:'National Avg Price',lq:'Sales Qty'});
-  const col=[{k:'on',h:'OutletName',f:r=>O.n[r.o]},{k:'oc',h:'Outlet Code',f:r=>O.c[r.o]},{k:'ac',h:'ArticleNo',f:r=>A.c[r.a]},{k:'an',h:'ArticleName',f:r=>A.n[r.a]},{k:'c3',h:'Cat',f:r=>M.cat3[A.c3[r.a]]},
+  const col=[{k:'on',h:'OutletName',f:r=>O.n[r.o]},{k:'oc',h:'Outlet Code',f:r=>O.c[r.o]},{k:'ac',h:'ArticleNo',f:r=>A.c[r.a]},{k:'an',h:'ArticleName',f:r=>A.n[r.a]},
+    {k:'dp',h:'Price Deviation %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>devStyle(r.dp,false)},{k:'c3',h:'Cat',f:r=>M.cat3[A.c3[r.a]]},
     {k:'q',h:'Quantity',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'cog',h:'COG (SAP)',n:1,f:r=>fmt(r.cog),s:r=>r.cog},{k:'nsi',h:'NSI',n:1,f:r=>fmt(r.nsi),s:r=>r.nsi},
     {k:'inc',h:'Incident Avg Price',n:1,f:r=>fmt(r.inc,0),s:r=>r.inc},{k:'nat',h:'National Avg Price',n:1,f:r=>fmt(r.nat,2),s:r=>r.nat},
-    {k:'dp',h:'Price Deviation %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,cls:r=>devClass(r.dp,false)},{k:'loss',h:'Total Sale Loss',n:1,f:r=>fmt(r.loss),s:r=>r.loss},
+    {k:'loss',h:'Total Sale Loss',n:1,f:r=>fmt(r.loss),s:r=>r.loss},
     {k:'im',h:'Incident Sale Margin %',n:1,f:r=>pc(r.im),s:r=>r.im},{k:'am',h:'Avg Sale Margin %',n:1,f:r=>pc(r.am),s:r=>r.am}];
   renderTable($('#usT1'),'usT1',col,res.rows,{sort:{k:'dp',d:1},click:r=>setSel(A.c[r.a],O.c[r.o]),isSel});
   const S=D.sale,acc=[];
