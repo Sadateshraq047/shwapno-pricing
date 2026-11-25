@@ -74,7 +74,9 @@ main{padding:14px 0 40px}
 .sel.show{display:flex}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .ph{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
-.ph h2{margin:0;font-size:16px;font-weight:700;color:var(--ink)}
+.ph h2{margin:0;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+.ph .btn{white-space:nowrap;flex:none}
+.ph .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .ph .c{font-size:12px;color:var(--ink-mute)}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 14px;cursor:pointer;font-size:12px;font-weight:600;color:var(--brand-deep)}
 :root[data-theme=dark] .btn{color:var(--ink)}
@@ -84,12 +86,12 @@ main{padding:14px 0 40px}
 @media(max-width:1100px){.row2,.row3{grid-template-columns:1fr}}
 .tw{overflow:auto;max-height:330px}
 table{border-collapse:collapse;width:100%;font-size:12px}
-th{position:sticky;top:0;background:#1b3a9e;color:#fff;text-align:left;padding:6px 7px;cursor:pointer;white-space:nowrap;border-bottom:1px solid var(--line);user-select:none;font-weight:600}
+th{position:sticky;top:0;background:#1b3a9e;color:#fff;text-align:left;padding:5px 6px;cursor:pointer;white-space:nowrap;border-bottom:1px solid var(--line);user-select:none;font-weight:600}
 :root[data-theme=dark] th{background:#1a2f72}
 th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
-td{padding:3px 7px;border-bottom:1px solid var(--line);white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+td{padding:2px 6px;border-bottom:1px solid var(--line);white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
 td.dv{font-weight:600;color:var(--ink)}
-td.two{line-height:1.25;padding-top:4px;padding-bottom:4px}
+td.two{line-height:1.18;padding-top:3px;padding-bottom:3px}
 td.two .t1,td.two .t2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 td.two .t1{color:var(--ink)} td.two .t2{color:var(--ink-mute);font-size:11px}
 th.fz,td.fz{position:sticky;z-index:2;background:var(--surface)}
@@ -334,6 +336,7 @@ function hideTip(){tip.style.display='none'}
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 const SORT={};
+const marginOK=r=>r.im!=null&&r.am!=null&&r.im>r.am;   // incident margin above the average margin: no colour
 function devStyle(dp,over){if(dp==null)return'';const m=over?dp:-dp;if(!(m>=10))return'';const a=(0.10+Math.min(m,80)/80*0.34).toFixed(2);return'background:rgba('+(over?'240,121,79':'224,100,110')+','+a+')'}
 function devClass(dp,over){if(dp==null)return'';const v=over?dp:-dp;return v>80?'cell-red':v>50?'cell-pink':v>30?'cell-or':v>20?'cell-yel':v>10?'cell-ly':''}
 const OUTC=(fz,w)=>({k:'oc',h:'Outlet',two:1,fz:fz?1:0,w:w||130,top:r=>M.outlets.c[r.o],sub:r=>M.outlets.n[r.o]||'',s:r=>M.outlets.c[r.o]});
@@ -353,7 +356,7 @@ function renderTable(host,id,cols,rows,o){
   host.innerHTML=h;
   host.querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(st.k===k)st.d=-st.d;else{st.k=k;st.d=1}renderTable(host,id,cols,rows,o)});
   if(o.click)host.querySelectorAll('tbody tr').forEach(tr=>tr.onclick=()=>o.click(vis[+tr.dataset.i]));
-  const cnt=host.parentElement.querySelector('.c');if(cnt)cnt.textContent=fmt(rows.length)+' rows'+(rows.length>max?' (showing '+max+'; CSV has all)':'');
+  const cnt=host.parentElement.querySelector('.c');if(cnt)cnt.textContent=fmt(rows.length)+' rows'+(rows.length>max?' (top '+max+'; CSV has all)':'');
   host._csv=()=>toCSV(cols,rows);
 }
 function toCSV(cols,rows){
@@ -500,7 +503,7 @@ function renderOB(){
   svgCombo($('#obChart'),obDaily(F,res),{l1:'Unit Receiving Cost',l2:'Avg Unit Receiving Cost',lq:'Receiving Qty'});
   const col=[
     OUTC(1),ARTC(1),
-    {k:'dp',h:'Deviation % (Above n)',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>devStyle(r.dp,true)},
+    {k:'dp',h:'Deviation % (Above n)',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>marginOK(r)?'':devStyle(r.dp,true)},
     {k:'c3',h:'Cat 3',f:r=>M.cat3[A.c3[r.a]]},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v},
     {k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.u,2),s:r=>r.u},{k:'avg',h:'Avg Unit Receiving Cost',n:1,f:r=>fmt(r.avg,2),s:r=>r.avg},
     {k:'loss',h:'Total Receiving Loss',n:1,f:r=>fmt(r.loss,2),s:r=>r.loss},
@@ -511,11 +514,11 @@ function renderOB(){
   if(R)for(let i=0;i<R.n;i++){const d=R.d[i];if(d<F.from||d>F.to)continue;const k=R.o[i]*100000+R.a[i];if(!res.incKeys.has(k)||!mm[R.m[i]]||!ptOK(F,R.t[i]))continue;
     const kk=d+'|'+k;let x=acc.get(kk);if(!x){x={d,o:R.o[i],a:R.a[i],q:0,v:0};acc.set(kk,x)}x.q+=R.q[i];x.v+=R.v[i]}
   const t2=[...acc.values()].filter(x=>x.q>0);
-  renderTable($('#obT2'),'obT2',[OUTC(1,78),ARTC(1,112),{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},{k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.v/r.q,2),s:r=>r.v/r.q},
+  renderTable($('#obT2'),'obT2',[OUTC(1,70),ARTC(1,100),{k:'d',h:'Day',w:78,f:r=>dayLabel(r.d),s:r=>r.d},{k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.v/r.q,2),s:r=>r.v/r.q},
     {k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v}],t2,{sort:{k:'q',d:-1}});
   // Table 5
   const po=res.incKeys.size?poLines(F,res.incKeys):[];
-  renderTable($('#obT5'),'obT5',[OUTC(1,78),ARTC(1,112),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
+  renderTable($('#obT5'),'obT5',[OUTC(1,70),ARTC(1,100),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
     {k:'u',h:'Received By',f:r=>M.users[r.u]},{k:'m',h:'Movement Type',f:r=>M.movs[r.m]},{k:'d',h:'Receiving Date',f:r=>dayLabel(r.d),s:r=>r.d},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q}],
     po,{sort:{k:'d',d:-1},empty:'No incidents for the current filters. Click an incident in Table 1 to see only its own PO lines.'});
   // Table 3 DC
@@ -560,7 +563,7 @@ function renderUS(){
   selBox('#usSel',res);
   svgCombo($('#usChart'),usDaily(F,res),{l1:'Incident average price',l2:'National Avg Price',lq:'Sales Qty'});
   const col=[OUTC(1),ARTC(1),
-    {k:'dp',h:'Price Deviation %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>devStyle(r.dp,false)},{k:'c3',h:'Cat',f:r=>M.cat3[A.c3[r.a]]},
+    {k:'dp',h:'Price Deviation %',n:1,f:r=>fmt(r.dp,2),s:r=>r.dp,st:r=>marginOK(r)?'':devStyle(r.dp,false)},{k:'c3',h:'Cat',f:r=>M.cat3[A.c3[r.a]]},
     {k:'q',h:'Quantity',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'cog',h:'COG (SAP)',n:1,f:r=>fmt(r.cog),s:r=>r.cog},{k:'nsi',h:'NSI',n:1,f:r=>fmt(r.nsi),s:r=>r.nsi},
     {k:'inc',h:'Incident Avg Price',n:1,f:r=>fmt(r.inc,0),s:r=>r.inc},{k:'nat',h:'National Avg Price',n:1,f:r=>fmt(r.nat,2),s:r=>r.nat},
     {k:'loss',h:'Total Sale Loss',n:1,f:r=>fmt(r.loss),s:r=>r.loss},
