@@ -79,7 +79,7 @@ main{padding:14px 0 40px}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 14px;cursor:pointer;font-size:12px;font-weight:600;color:var(--brand-deep)}
 :root[data-theme=dark] .btn{color:var(--ink)}
 .btn:hover{border-color:var(--brand)}
-.row2{display:grid;grid-template-columns:1fr 1.35fr;gap:14px}
+.row2{display:grid;grid-template-columns:1.1fr 1.25fr;gap:14px}
 .row3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
 @media(max-width:1100px){.row2,.row3{grid-template-columns:1fr}}
 .tw{overflow:auto;max-height:330px}
@@ -511,11 +511,11 @@ function renderOB(){
   if(R)for(let i=0;i<R.n;i++){const d=R.d[i];if(d<F.from||d>F.to)continue;const k=R.o[i]*100000+R.a[i];if(!res.incKeys.has(k)||!mm[R.m[i]]||!ptOK(F,R.t[i]))continue;
     const kk=d+'|'+k;let x=acc.get(kk);if(!x){x={d,o:R.o[i],a:R.a[i],q:0,v:0};acc.set(kk,x)}x.q+=R.q[i];x.v+=R.v[i]}
   const t2=[...acc.values()].filter(x=>x.q>0);
-  renderTable($('#obT2'),'obT2',[OUTC(0,90),ARTC(0,125),{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},
-    {k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v},{k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.v/r.q,2),s:r=>r.v/r.q}],t2,{sort:{k:'q',d:-1}});
+  renderTable($('#obT2'),'obT2',[OUTC(1,78),ARTC(1,112),{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},{k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.v/r.q,2),s:r=>r.v/r.q},
+    {k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v}],t2,{sort:{k:'q',d:-1}});
   // Table 5
   const po=res.incKeys.size?poLines(F,res.incKeys):[];
-  renderTable($('#obT5'),'obT5',[OUTC(0,90),ARTC(0,125),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
+  renderTable($('#obT5'),'obT5',[OUTC(1,78),ARTC(1,112),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
     {k:'u',h:'Received By',f:r=>M.users[r.u]},{k:'m',h:'Movement Type',f:r=>M.movs[r.m]},{k:'d',h:'Receiving Date',f:r=>dayLabel(r.d),s:r=>r.d},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q}],
     po,{sort:{k:'d',d:-1},empty:'No incidents for the current filters. Click an incident in Table 1 to see only its own PO lines.'});
   // Table 3 DC
