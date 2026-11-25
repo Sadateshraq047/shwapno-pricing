@@ -166,7 +166,7 @@ async function load(){
   if(D.sale){for(let i=0;i<D.sale.n;i++){const k=D.sale.o[i]*100000+D.sale.a[i];let l=D.saleIdx.get(k);if(!l){l=[];D.saleIdx.set(k,l)}l.push(i)}}
   M.aIdx=new Map(M.articles.c.map((c,i)=>[c,i]));
   F.from=0;F.to=M.days-1;F.df=Math.max(10,Math.ceil(M.keep_dev));
-  const lm=M.masters.indexOf('LOOSE COMMODITY');if(lm>=0)F.master=new Set(['LOOSE COMMODITY']);
+  
 }
 /* ============================== masks ============================== */
 const tokens=s=>s.split(/[,;\n]+/).map(x=>x.trim().toLowerCase()).filter(Boolean);
@@ -336,14 +336,14 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 const SORT={};
 function devStyle(dp,over){if(dp==null)return'';const m=over?dp:-dp;if(!(m>=10))return'';const a=(0.10+Math.min(m,80)/80*0.34).toFixed(2);return'background:rgba('+(over?'240,121,79':'224,100,110')+','+a+')'}
 function devClass(dp,over){if(dp==null)return'';const v=over?dp:-dp;return v>80?'cell-red':v>50?'cell-pink':v>30?'cell-or':v>20?'cell-yel':v>10?'cell-ly':''}
-const OUTC=(fz,w)=>({k:'oc',h:'Outlet',two:1,fz:fz?1:0,w:w||150,top:r=>M.outlets.c[r.o],sub:r=>M.outlets.n[r.o]||'',s:r=>M.outlets.c[r.o]});
-const ARTC=(fz,w)=>({k:'ac',h:'Article',two:1,fz:fz?1:0,w:w||210,top:r=>M.articles.c[r.a],sub:r=>M.articles.n[r.a]||'',s:r=>M.articles.c[r.a]});
+const OUTC=(fz,w)=>({k:'oc',h:'Outlet',two:1,fz:fz?1:0,w:w||130,top:r=>M.outlets.c[r.o],sub:r=>M.outlets.n[r.o]||'',s:r=>M.outlets.c[r.o]});
+const ARTC=(fz,w)=>({k:'ac',h:'Article',two:1,fz:fz?1:0,w:w||180,top:r=>M.articles.c[r.a],sub:r=>M.articles.n[r.a]||'',s:r=>M.articles.c[r.a]});
 function renderTable(host,id,cols,rows,o){
   o=o||{};const st=SORT[id]||(SORT[id]=o.sort||{k:null,d:1});
   if(st.k){const c=cols.find(c=>c.k===st.k);if(c){const g=c.s||(r=>r[c.k]);rows=rows.slice().sort((a,b)=>{const x=g(a),y=g(b);if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return(x<y?-1:x>y?1:0)*st.d})}}
   const max=o.max||500,vis=rows.slice(0,max);
   let lf=0,lastFz=-1;cols.forEach((c,i)=>{if(c.fz)lastFz=i});
-  const pos=cols.map((c,i)=>{const l=lf;if(c.fz)lf+=c.w||140;return c.fz?'left:'+l+'px;width:'+(c.w||140)+'px;min-width:'+(c.w||140)+'px;max-width:'+(c.w||140)+'px;':''});
+  const pos=cols.map((c,i)=>{const l=lf;if(c.fz)lf+=c.w||140;const w=c.w||140;return (c.fz?'left:'+l+'px;':'')+(c.w?'width:'+w+'px;min-width:'+w+'px;max-width:'+w+'px;':'')});
   const fzc=(c,i)=>c.fz?' fz'+(i===lastFz?' fzl':''):'';
   let h='<div class="tw"><table><thead><tr>'+cols.map((c,i)=>'<th class="'+(c.n?'n':'')+fzc(c,i)+'"'+(pos[i]?' style="'+pos[i]+'"':'')+' data-k="'+c.k+'">'+esc(c.h)+(st.k===c.k?(st.d>0?' ▲':' ▼'):'')+'</th>').join('')+'</tr></thead><tbody>';
   vis.forEach((r,i)=>{h+='<tr class="'+(o.click?'click ':'')+(o.isSel&&o.isSel(r)?'on':'')+'" data-i="'+i+'">'+cols.map((c,i)=>{if(c.two){const a=c.top(r),b=c.sub(r);return'<td class="two'+fzc(c,i)+'" style="'+pos[i]+(pos[i]?'':'max-width:230px;')+'" title="'+esc(a+' - '+b)+'"><div class="t1">'+esc(a)+'</div><div class="t2">'+esc(b)+'</div></td>'}
@@ -447,7 +447,7 @@ function buildFilters(){
   on('#fPt','change',()=>{F.ptype=$('#fPt').value;render()});
   on('#fQf','input',deb(()=>{F.qf=Math.max(0,+$('#fQf').value||0);render()}));
   on('#fDf','input',deb(()=>{F.df=Math.max(Math.ceil(M.keep_dev),+$('#fDf').value||0);render()}));
-  on('#fReset','click',()=>{F=Object.assign({},DEF,{master:new Set(),mov:new Set(),from:0,to:M.days-1,df:10});F.df=Math.max(10,Math.ceil(M.keep_dev));if(M.masters.includes('LOOSE COMMODITY'))F.master=new Set(['LOOSE COMMODITY']);syncInputs();render()});
+  on('#fReset','click',()=>{F=Object.assign({},DEF,{master:new Set(),mov:new Set(),from:0,to:M.days-1,df:10});F.df=Math.max(10,Math.ceil(M.keep_dev));syncInputs();render()});
 }
 function syncInputs(){
   $('#fFrom').value=dayISO(F.from);$('#fTo').value=dayISO(F.to);
@@ -511,11 +511,11 @@ function renderOB(){
   if(R)for(let i=0;i<R.n;i++){const d=R.d[i];if(d<F.from||d>F.to)continue;const k=R.o[i]*100000+R.a[i];if(!res.incKeys.has(k)||!mm[R.m[i]]||!ptOK(F,R.t[i]))continue;
     const kk=d+'|'+k;let x=acc.get(kk);if(!x){x={d,o:R.o[i],a:R.a[i],q:0,v:0};acc.set(kk,x)}x.q+=R.q[i];x.v+=R.v[i]}
   const t2=[...acc.values()].filter(x=>x.q>0);
-  renderTable($('#obT2'),'obT2',[OUTC(0,120),ARTC(0,160),{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},
+  renderTable($('#obT2'),'obT2',[OUTC(0,90),ARTC(0,125),{k:'d',h:'Day',f:r=>dayLabel(r.d),s:r=>r.d},
     {k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q},{k:'v',h:'Receiving Cost',n:1,f:r=>fmt(r.v),s:r=>r.v},{k:'u',h:'Unit Receiving Cost',n:1,f:r=>fmt(r.v/r.q,2),s:r=>r.v/r.q}],t2,{sort:{k:'q',d:-1}});
   // Table 5
   const po=res.incKeys.size?poLines(F,res.incKeys):[];
-  renderTable($('#obT5'),'obT5',[OUTC(0,120),ARTC(0,160),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
+  renderTable($('#obT5'),'obT5',[OUTC(0,90),ARTC(0,125),{k:'po',h:'PO Number',f:r=>M.pos[r.p]},{k:'cb',h:'PO Created By',f:r=>M.pocb[r.p]<0?'No PO record':M.createdby[M.pocb[r.p]]},
     {k:'u',h:'Received By',f:r=>M.users[r.u]},{k:'m',h:'Movement Type',f:r=>M.movs[r.m]},{k:'d',h:'Receiving Date',f:r=>dayLabel(r.d),s:r=>r.d},{k:'q',h:'Receiving Qty',n:1,f:r=>fmt(r.q),s:r=>r.q}],
     po,{sort:{k:'d',d:-1},empty:'No incidents for the current filters. Click an incident in Table 1 to see only its own PO lines.'});
   // Table 3 DC
